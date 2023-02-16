@@ -11,7 +11,8 @@ const config = {
 		adapter: adapter(),
 		alias: {
 			'$styles': '/src/styles',
-			'$lib': '/src/lib'
+			'$lib': '/src/lib',
+			'$stores': '/src/stores'
 		}
 	}
 };

@@ -1,0 +1,53 @@
+main#login {
+    section#login-landing {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 3em 0;
+
+        @media only screen and (max-width: 767px) {
+            font-size: 3.2vw;
+        }
+
+        @media only screen and (min-width: 768px) {
+            font-size: 1.7vw;
+        }
+
+        @media only screen and (min-width: 1024px) {
+            font-size: inherit;
+            padding: 5em 0;
+        }
+
+        .container {
+            max-width: (1200/20em);
+            margin: auto;
+
+            form {
+                display: flex;
+                flex-direction: column;
+                width: (400/20em);
+                padding: 1em;
+                box-shadow: var(--box-shadow);
+                border-radius: 1em;
+
+                input {
+                    border: 0;
+                    padding: .5em;
+                    box-shadow: var(--box-shadow);
+                    margin-bottom: 1em;
+                    width: 100%;
+                }
+
+                button {
+                    width: 100%;
+                    margin: 0;
+
+                    &:hover {
+                        background-color: #202020;
+                        color: white;
+                    }
+                }
+            }
+        }
+    }
+}
