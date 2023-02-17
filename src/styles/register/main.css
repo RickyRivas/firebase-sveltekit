@@ -1,0 +1,49 @@
+main#register section#register-landing {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3em 0;
+}
+@media only screen and (max-width: 767px) {
+  main#register section#register-landing {
+    font-size: 3.2vw;
+  }
+}
+@media only screen and (min-width: 768px) {
+  main#register section#register-landing {
+    font-size: 1.7vw;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  main#register section#register-landing {
+    font-size: inherit;
+    padding: 5em 0;
+  }
+}
+main#register section#register-landing .container {
+  max-width: 60em;
+  margin: auto;
+}
+main#register section#register-landing .container form {
+  display: flex;
+  flex-direction: column;
+  width: 20em;
+  padding: 1em;
+  box-shadow: var(--box-shadow);
+  border-radius: 1em;
+}
+main#register section#register-landing .container form input {
+  border: 0;
+  padding: 0.5em;
+  box-shadow: var(--box-shadow);
+  margin-bottom: 1em;
+  width: 100%;
+}
+main#register section#register-landing .container form button {
+  width: 100%;
+  margin: 0;
+}
+main#register section#register-landing .container form button:hover {
+  background-color: #202020;
+  color: white;
+}

@@ -8,6 +8,7 @@
 
 	// styles
 	import '$styles/layout/navigation.less';
+	import { supabaseClient } from '$lib/supabase/supabase';
 
 	// logic
 	let isActive = false;
@@ -18,6 +19,9 @@
 	};
 
 	let y: any;
+
+	// auth logic
+	export let session: any;
 </script>
 
 <svelte:window bind:scrollY={y} />
@@ -90,7 +94,14 @@
 			</ul>
 
 			<!-- nav cta -->
-			<a id="cta" href="/contact" class="btn">Contact</a>
+			{#if session}
+				<form action="/login?/logout" method="POST">
+					<button id="cta" class="btn" type="submit">Logout</button>
+				</form>
+			{:else if !session}
+				<a id="cta" href="/login" class="btn">Login</a>
+				<a id="cta" href="/register" class="btn">Register</a>
+			{/if}
 			<!-- nav cta -->
 		</div>
 

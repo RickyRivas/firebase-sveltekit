@@ -1,9 +1,7 @@
 <script lang="ts">
 	// components
 	import SubNav from '$lib/components/SubNav.svelte';
-	import { pages } from '$lib/config';
 	import { page } from '$app/stores';
-	// const thisPage = pages.find((p) => p.path === $page.route.id);
 	const pageTitle = $page.route.id?.slice(1);
 	// stores
 	// styles
@@ -18,9 +16,9 @@
 <main id="login">
 	<section id="login-landing">
 		<div class="container">
-			<form action="">
-				<input type="email" placeholder="Email" />
-				<input type="text" placeholder="Password" />
+			<form action="?/login" method="POST">
+				<input type="email" name="email" placeholder="Email" />
+				<input type="password" name="password" placeholder="Password" />
 				<button class="btn">Submit</button>
 			</form>
 		</div>

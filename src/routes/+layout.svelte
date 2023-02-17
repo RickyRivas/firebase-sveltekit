@@ -1,28 +1,33 @@
-<script>
+<script lang="ts">
 	// components
 	import Navigation from '$lib/components/Navigation.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import ToTop from '$lib/components/ToTop.svelte';
-	import { goto } from '$app/navigation';
-	import { onMount } from 'svelte';
-	import { auth } from '$lib/firebase/firebase.client';
-	import { authStore } from '$stores/authStore';
 	// stores
 	// styles
 	import '$styles/global.css';
+	import { onMount } from 'svelte';
+	import { supabaseClient } from '$lib/supabase/supabase';
+	import { invalidateAll } from '$app/navigation';
+	import type { PageData } from './$types';
 	// logic
-
 	onMount(() => {
-		const unsubscribe = auth.onAuthStateChanged((user) => {
-			console.log(user);
-			authStore.update((curr) => {
-				return { ...curr, isLoading: false, currentUser: user };
-			});
+		const {
+			data: { subscription }
+		} = supabaseClient.auth.onAuthStateChange(() => {
+			invalidateAll();
 		});
+
+		return () => {
+			subscription.unsubscribe();
+		};
 	});
+
+	export let data: PageData;
+	const { session } = data;
 </script>
 
-<Navigation />
+<Navigation {session} />
 <slot />
 <Footer />
 <ToTop />
