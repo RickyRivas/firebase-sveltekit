@@ -21,6 +21,9 @@
 				<input type="password" name="password" placeholder="Password" />
 				<button class="btn">Submit</button>
 			</form>
+			<p class="note">
+				or <a href="/register">Register</a>
+			</p>
 		</div>
 	</section>
 </main>

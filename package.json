@@ -37,6 +37,7 @@
 		"@supabase/supabase-js": "^2.8.0",
 		"dotenv": "^16.0.3",
 		"firebase": "^9.17.1",
+		"svelte-easy-crop": "^2.0.1",
 		"swiper": "^8.4.5"
 	}
 }

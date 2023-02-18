@@ -9,6 +9,7 @@
 	// styles
 	import '$styles/layout/navigation.less';
 	import { supabaseClient } from '$lib/supabase/supabase';
+	import { onMount } from 'svelte';
 
 	// logic
 	let isActive = false;
@@ -22,6 +23,11 @@
 
 	// auth logic
 	export let session: any;
+	let userInitial: string;
+
+	if (session) {
+		userInitial = session.user.email[0];
+	}
 </script>
 
 <svelte:window bind:scrollY={y} />
@@ -117,5 +123,14 @@
 		</button>
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<div class="nav-overlay" class:isActive on:click={toggle} />
+
+		<!-- profile -->
+		<a class="current-user" href="/profile">
+			{#if session}
+				{userInitial}
+			{:else}
+				Sign in
+			{/if}
+		</a>
 	</nav>
 </header>
