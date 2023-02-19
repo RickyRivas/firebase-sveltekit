@@ -23,10 +23,8 @@
 
 	// auth logic
 	export let session: any;
-	let userInitial: string;
 	let cloudinaryImgUrl: string | null = null;
 	if (session) {
-		userInitial = session.user.email[0];
 		cloudinaryImgUrl = session.user.user_metadata.avatar_url;
 	}
 </script>
@@ -127,10 +125,10 @@
 
 		<!-- profile -->
 		<a class="current-user" href="/profile">
-			{#if session}
+			{#if session && cloudinaryImgUrl}
 				<img src={cloudinaryImgUrl} alt="profile picture " width="100" height="100" />
-			{:else}
-				Sign in
+			{:else if !cloudinaryImgUrl}
+				<img src="/placeholder.jpg" alt="profile picture " width="100" height="100" />
 			{/if}
 		</a>
 	</nav>

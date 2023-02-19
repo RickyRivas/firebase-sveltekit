@@ -106,12 +106,16 @@
 				<div class="item">
 					<h2>Profile Photo</h2>
 					<div class="img-container {avatarUrl ? '' : 'none'}">
-						<img
-							src={cloudinaryUrl}
-							alt="profile picture for {userName}"
-							width="500"
-							height="500"
-						/>
+						{#if session && cloudinaryUrl}
+							<img
+								src={cloudinaryUrl}
+								alt="profile picture for {userName}"
+								width="500"
+								height="500"
+							/>
+						{:else if !cloudinaryUrl}
+							<img src="/placeholder.jpg" alt="profile picture " width="100" height="100" />
+						{/if}
 					</div>
 					<UploadCloudinary {session} />
 				</div>

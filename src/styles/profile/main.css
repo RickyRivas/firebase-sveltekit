@@ -6,7 +6,7 @@ main#profile section#profile-landing {
 }
 @media only screen and (max-width: 767px) {
   main#profile section#profile-landing {
-    font-size: 3.2vw;
+    font-size: 1em;
   }
 }
 @media only screen and (min-width: 768px) {
@@ -40,6 +40,8 @@ main#profile section#profile-landing .container .col {
   box-shadow: var(--box-shadow);
   width: 100%;
   margin-bottom: 1em;
+  display: flex;
+  flex-direction: column;
 }
 @media only screen and (min-width: 768px) {
   main#profile section#profile-landing .container .col {
@@ -50,6 +52,9 @@ main#profile section#profile-landing .container .col .item {
   border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
   padding: 0.5em 0 0.5em 0;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 main#profile section#profile-landing .container .col .item:nth-child(1) {
   padding-top: 0;

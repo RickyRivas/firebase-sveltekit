@@ -10,6 +10,7 @@ const config = cloudinary.config({
     secure: true
 })
 
+// 
 export const GET: RequestHandler = async () => {
 
     const timestamp = Math.round((new Date).getTime() / 1000);
@@ -23,4 +24,17 @@ export const GET: RequestHandler = async () => {
             status: 200,
         })
 
+}
+
+// delete previous avatar from Cloudinary when user uploads new avatar
+export const POST: RequestHandler = async ({ request }) => {
+    const public_id = await request.json()
+
+    const { result } = await cloudinary.uploader.destroy(public_id)
+
+    if (result === 'not found') {
+          return new Response(JSON.stringify({msg: result}), { status: 400 })
+    } else {
+        return new Response(JSON.stringify({msg: result }), { status: 200 })
+    }
 }
