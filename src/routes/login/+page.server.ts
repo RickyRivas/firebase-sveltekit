@@ -33,8 +33,6 @@ export const actions: Actions = {
             })
         }
 
-        locals.session = null
-
         throw redirect(303, '/')
     }
 };

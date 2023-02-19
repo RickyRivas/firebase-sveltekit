@@ -1,5 +1,5 @@
 <script lang="ts">
-	import UploadCloudinary from './../../lib/UploadCloudinary.svelte';
+	import UploadCloudinary from '$lib/UploadCloudinary.svelte';
 	import { supabaseClient } from '$lib/supabase/supabase';
 	import type { PageData } from './$types';
 	// components
@@ -16,7 +16,7 @@
 	let userName: string | null = null;
 	let avatarUrl: string | null = null;
 	let userEmail: string | null = session.user.email;
-	let cloudinaryUrl: string | null = null;
+	let cloudinaryUrl: string | null = session.user.user_metadata.avatar_url;
 
 	// onmount get account details
 	onMount(() => {
@@ -38,7 +38,6 @@
 
 			// set username & avatar_url
 			userName = data!.username;
-			cloudinaryUrl = data!.avatar_url;
 		} catch (error) {
 			if (error instanceof Error) {
 				alert(error.message);
@@ -98,6 +97,7 @@
 						placeholder={userName}
 						bind:value={userName}
 						on:blur={updateUsername}
+						disabled
 					/>
 				</div>
 			</div>

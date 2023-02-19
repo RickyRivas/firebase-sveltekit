@@ -32,16 +32,26 @@
 			}
 		};
 
-		async function updateSb(data: any) {
+		async function updateSb(imgUrl: any) {
 			try {
-				const { error } = await supabaseClient
-					.from('profiles')
-					.update({ avatar_url: data })
-					.eq('id', session.user.id);
+				// 1 update user_metadata
+				const { data, error } = await supabaseClient.auth.updateUser({
+					data: { avatar_url: imgUrl }
+				});
 
 				if (error) {
 					console.log(error);
 				}
+				console.log('Updated user metadata');
+
+				// 2 set new session + reload
+				const { data: d, error: e } = await supabaseClient.auth.refreshSession();
+
+				if (e) {
+					console.log(e);
+				}
+
+				window.location.reload();
 			} catch (error) {
 				if (error instanceof Error) {
 					console.log(error);

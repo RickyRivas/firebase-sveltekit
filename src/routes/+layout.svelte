@@ -25,6 +25,8 @@
 
 	export let data: PageData;
 	const { session } = data;
+
+	console.log('Layout', data);
 </script>
 
 <Navigation {session} />
