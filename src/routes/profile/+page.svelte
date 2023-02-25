@@ -1,82 +1,50 @@
 <script lang="ts">
-	import { fade, fly } from 'svelte/transition';
-	import { flip } from 'svelte/animate';
+	import type { item } from '$lib/supabase/supabase';
 	import UploadCloudinary from '$lib/UploadCloudinary.svelte';
 	import { supabaseClient } from '$lib/supabase/supabase';
 	import type { PageData } from './$types';
 	// components
+	import ToastNotifications from '$lib/components/ToastNotifications.svelte';
 	// stores
 	// styles
 	import '$styles/profile/main.css';
 	import { onMount } from 'svelte';
-	import Error from '../+error.svelte';
 	// logic
 	export let data: PageData;
 	const { session } = data;
 
 	// account info
-	let userName: string | null = null;
-	let avatarUrl: string | null = null;
+	let userName: string | null = data.username.data.username;
+	let avatarUrl: string | null = data.avatar_url.data.avatar_url;
 	let userEmail: string | null = session.user.email;
-	let cloudinaryUrl: string | null = session.user.user_metadata.avatar_url;
 
 	// onmount get account details
 	onMount(() => {
-		getProfile();
+		// console.log(data);
 	});
 
-	const getProfile = async () => {
-		const { user } = session;
-
-		const { data, error, status } = await supabaseClient
-			.from('profiles')
-			.select(`username, avatar_url`)
-			.eq('id', user.id)
-			.single();
-
-		// checking
-		if (error && status !== 406) {
-			throw error;
-		} else {
-			userName = data!.username;
-		}
-	};
-
-	// update username
 	async function updateUsername() {
-		try {
-			const { error, status } = await supabaseClient
-				.from('profiles')
-				.update({ username: `${userName}` })
-				.eq('id', session.user.id);
+		const { error, status } = await supabaseClient
+			.from('profiles')
+			.update({ username: `${userName}` })
+			.eq('id', session.user.id);
 
-			// if error
-			if (status !== 204 && error) {
-				addToast('FAILED', 'Something went wrong.');
-				throw error;
-			}
-			// success
-			addToast('SUCCESS', 'Successfully updated.');
-		} catch (e) {
-			if (e instanceof Error) {
-				console.log('updateusername func error', e);
-			}
+		// if error
+		if (status !== 204 && error) {
+			addToast('FAILED', 'Something went wrong.');
+			throw error;
 		}
+		// success
+		addToast('SUCCESS', 'Successfully updated.');
 	}
 
-	// toast
-	interface item {
-		id: number;
-		severity: string;
-		message: string;
-	}
+	// toast notifications
+	let toastItems: any = [];
 
-	let items: any = [];
-
-	$: if (items.length > 0) {
-		const thisItem = items[items.length - 1];
+	$: if (toastItems.length > 0) {
+		const thisItem = toastItems[toastItems.length - 1];
 		setTimeout(() => {
-			items = items.filter((i: item) => i.id !== thisItem.id);
+			toastItems = toastItems.filter((i: item) => i.id !== thisItem.id);
 		}, 3000);
 	}
 
@@ -86,7 +54,7 @@
 			severity,
 			message
 		};
-		items = [...items, newItem];
+		toastItems = [...toastItems, newItem];
 	}
 </script>
 
@@ -124,18 +92,13 @@
 				<div class="item">
 					<h2>Profile Photo</h2>
 					<div class="img-container {avatarUrl ? '' : 'none'}">
-						{#if session && cloudinaryUrl}
-							<img
-								src={cloudinaryUrl}
-								alt="profile picture for {userName}"
-								width="500"
-								height="500"
-							/>
-						{:else if !cloudinaryUrl}
+						{#if session && avatarUrl}
+							<img src={avatarUrl} alt="profile picture for {userName}" width="500" height="500" />
+						{:else if !avatarUrl}
 							<img src="/placeholder.jpg" alt="profile picture " width="100" height="100" />
 						{/if}
 					</div>
-					<UploadCloudinary {session} />
+					<UploadCloudinary {session} {avatarUrl} />
 				</div>
 			</div>
 
@@ -149,40 +112,4 @@
 </main>
 
 <!-- Toast notifications -->
-<div id="toast-notifications">
-	<ul>
-		{#each items as item (item.id)}
-			<li
-				class="toast 
-		{item.severity === 'SUCCESS' ? 'success' : ''}
-		{item.severity === 'FAILED' ? 'failed' : ''}"
-				animate:flip
-				in:fade
-				out:fly={{ x: 100 }}
-			>
-				{#if item.severity === 'SUCCESS'}
-					<img
-						class=""
-						src="/toast/check.svg"
-						alt=""
-						width="18"
-						height="18"
-						loading="lazy"
-						decoding="async"
-					/>
-				{:else if item.severity === 'FAILED'}
-					<img
-						class=""
-						src="/toast/close.svg"
-						alt=""
-						width="18"
-						height="18"
-						loading="lazy"
-						decoding="async"
-					/>
-				{/if}
-				<p>{item.message}</p>
-			</li>
-		{/each}
-	</ul>
-</div>
+<ToastNotifications items={toastItems} />

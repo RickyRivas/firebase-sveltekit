@@ -8,8 +8,6 @@
 
 	// styles
 	import '$styles/layout/navigation.less';
-	import { supabaseClient } from '$lib/supabase/supabase';
-	import { onMount } from 'svelte';
 
 	// logic
 	let isActive = false;
@@ -22,42 +20,14 @@
 	let y: any;
 
 	// auth logic
+	export let avatarUrl: any;
 	export let session: any;
-	let cloudinaryImgUrl: string | null = null;
-	if (session) {
-		cloudinaryImgUrl = session.user.user_metadata.avatar_url;
-	}
 </script>
 
 <svelte:window bind:scrollY={y} />
 
 <header class={y >= 100 ? 'scroll' : ''}>
-	<!-- contactinfo start -->
-	<div class="contactinfo">
-		<div class="container">
-			<div class="info">
-				<a href="/contact" class="location">{fullAddress}</a>
-				<a
-					href="tel:{phone.replace('(', '').replace(')', '').replace('-', '').replace(' ', '')}"
-					class="phone">{phone}</a
-				>
-				<a href="/contact" class="hrs">Mon-Fri 10am - 11pm</a>
-				<a href="mailto:{email}" class="email">{email}</a>
-			</div>
-			<div class="socials">
-				{#each socials as social}
-					{#if social.url.length >= 1}
-						<a class={social.platform} aria-label={social.platform} href={social.url}>
-							<BaseImage src="/social/{social.platform}.svg" alt="icon" width="25" height="25" />
-						</a>
-					{/if}
-				{/each}
-			</div>
-		</div>
-	</div>
-	<!-- contactinfo end -->
 	<nav>
-		<!-- logo -->
 		<a href="/" class="logo">
 			<svg
 				width="219"
@@ -74,11 +44,7 @@
 				/>
 			</svg>
 		</a>
-		<!-- logo -->
-
 		<div class="inner-nav" class:isActive>
-			<!-- mobile logo or 'Menu' text -->
-
 			<ul class="links">
 				<!-- pages - controlled by config -->
 				{#each pages as { pageName, path }}
@@ -103,7 +69,7 @@
 				<form action="/login?/logout" method="POST">
 					<button id="cta" class="btn" type="submit">Logout</button>
 				</form>
-			{:else if !session}
+			{:else}
 				<a id="cta" href="/login" class="btn">Login</a>
 				<a id="cta" href="/register" class="btn">Register</a>
 			{/if}
@@ -125,9 +91,9 @@
 
 		<!-- profile -->
 		<a class="current-user" href="/profile">
-			{#if session && cloudinaryImgUrl}
-				<img src={cloudinaryImgUrl} alt="profile picture " width="100" height="100" />
-			{:else if !cloudinaryImgUrl}
+			{#if avatarUrl}
+				<img src={avatarUrl} alt="profile picture " width="100" height="100" />
+			{:else if !avatarUrl}
 				<img src="/placeholder.jpg" alt="profile picture " width="100" height="100" />
 			{/if}
 		</a>

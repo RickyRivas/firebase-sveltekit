@@ -12,7 +12,9 @@ declare global {
 		}
 		interface Locals {
 			sb: TypedSupabaseClient,
-			session: Session | null
+			session: Session | null,
+			username: any,
+			avatar_url: any
 		}
 		interface PageData {
 			session: import("@supabase/supabase-js").Session | null

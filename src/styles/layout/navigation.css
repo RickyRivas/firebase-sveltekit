@@ -36,59 +36,6 @@ header .nav-overlay.isActive {
     position: fixed;
   }
 }
-header .contactinfo {
-  background-color: rgba(0, 0, 0, 0.05);
-  display: block;
-  padding: 0.2em;
-}
-@media only screen and (max-width: 1023px) {
-  header .contactinfo {
-    display: none;
-  }
-}
-header .contactinfo .container {
-  width: 100%;
-  max-width: 60em;
-  margin: auto;
-  padding: 0 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-header .contactinfo .container .info {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-header .contactinfo .container .info a {
-  color: #202020;
-  text-decoration: none;
-  font-size: 0.75em;
-  margin-right: 1em;
-  transition: color 0.33s ease;
-}
-header .contactinfo .container .info a:nth-last-child(1) {
-  margin: 0;
-}
-header .contactinfo .container .info a:hover {
-  color: var(--primary-color);
-}
-header .contactinfo .container .socials {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-header .contactinfo .container .socials > a {
-  text-decoration: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 0.5em;
-}
-header .contactinfo .container .socials > a img {
-  width: 1em;
-  height: 1em;
-}
 header nav {
   width: 100%;
   max-width: 60em;

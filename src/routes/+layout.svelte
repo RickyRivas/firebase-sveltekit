@@ -9,7 +9,7 @@
 	import { onMount } from 'svelte';
 	import { supabaseClient } from '$lib/supabase/supabase';
 	import { invalidateAll } from '$app/navigation';
-	import type { PageData } from './$types';
+	import type { LayoutData } from './$types';
 	// logic
 	onMount(() => {
 		const {
@@ -23,11 +23,12 @@
 		};
 	});
 
-	export let data: PageData;
+	export let data: LayoutData;
+	const avatarUrl = data.avatarUrl.data?.avatar_url;
 	const { session } = data;
 </script>
 
-<Navigation {session} />
+<Navigation {avatarUrl} {session} />
 <slot />
 <Footer />
 <ToTop />
