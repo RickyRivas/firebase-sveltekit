@@ -7,7 +7,9 @@ import type { TypedSupabaseClient } from "@supabase/auth-helpers-sveltekit";
 
 declare global {
 	declare namespace App {
-		// interface Error {}
+		interface Error {
+			message: string
+		}
 		interface Locals {
 			sb: TypedSupabaseClient,
 			session: Session | null

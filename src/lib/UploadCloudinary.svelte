@@ -155,11 +155,16 @@
 {#if !session.user.user_metadata.avatar_url}
 	<button on:click|preventDefault={handleClick}>Upload</button>
 {:else}
-	<button on:click|preventDefault={handleClick}>Upload</button>
-	<button on:click|preventDefault={removeAvatar}>Clear Avatar</button>
+	<div class="btns">
+		<button on:click|preventDefault={handleClick}>Upload</button>
+		<button on:click|preventDefault={removeAvatar}>Clear Avatar</button>
+	</div>
 {/if}
 
 <style>
+	.btns {
+		display: flex;
+	}
 	button {
 		border: 0;
 		padding: 0.5em 2em;
@@ -168,5 +173,8 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+	}
+	button:nth-child(1) {
+		margin-right: 0.5em;
 	}
 </style>

@@ -123,3 +123,51 @@ main#profile {
         }
     }
 }
+
+#toast-notifications {
+    width: auto;
+    height: auto;
+    position: fixed;
+    top: 5em;
+    right: 1em;
+    z-index: 9999;
+    pointer-events: none;
+
+    ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: .5em;
+
+        .toast {
+            padding: 1em;
+            font-size: (15/20em);
+            width: (225/15em);
+            box-shadow: var(--box-shadow);
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+
+            img {
+                width: (18/15em);
+                height: (18/15em);
+                margin-right: 1em;
+                position: relative;
+            }
+
+            &.success {
+                background-color: #ebfbf6;
+                border-left: 2px solid #007200;
+            }
+
+            &.failed {
+                background-color: #fdedee;
+                border-left: 2px solid #ba181b;
+            }
+
+            &.warning {
+                background-color: #fff9e9;
+            }
+        }
+    }
+}

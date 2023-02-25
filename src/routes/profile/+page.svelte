@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { fade, fly } from 'svelte/transition';
+	import { flip } from 'svelte/animate';
 	import UploadCloudinary from '$lib/UploadCloudinary.svelte';
 	import { supabaseClient } from '$lib/supabase/supabase';
 	import type { PageData } from './$types';
@@ -7,10 +9,10 @@
 	// styles
 	import '$styles/profile/main.css';
 	import { onMount } from 'svelte';
+	import Error from '../+error.svelte';
 	// logic
 	export let data: PageData;
 	const { session } = data;
-	console.log(data);
 
 	// account info
 	let userName: string | null = null;
@@ -24,50 +26,67 @@
 	});
 
 	const getProfile = async () => {
-		try {
-			const { user } = session;
+		const { user } = session;
 
-			const { data, error, status } = await supabaseClient
-				.from('profiles')
-				.select(`username, avatar_url`)
-				.eq('id', user.id)
-				.single();
+		const { data, error, status } = await supabaseClient
+			.from('profiles')
+			.select(`username, avatar_url`)
+			.eq('id', user.id)
+			.single();
 
-			// checking
-			if (error && status !== 406) throw error;
-
-			// set username & avatar_url
+		// checking
+		if (error && status !== 406) {
+			throw error;
+		} else {
 			userName = data!.username;
-		} catch (error) {
-			if (error instanceof Error) {
-				alert(error.message);
-			}
 		}
 	};
 
 	// update username
-	let usernameUpdated = false;
 	async function updateUsername() {
 		try {
-			const { error: err } = await supabaseClient
+			const { error, status } = await supabaseClient
 				.from('profiles')
 				.update({ username: `${userName}` })
 				.eq('id', session.user.id);
 
-			if (err) {
-				console.log('UU error', err);
+			// if error
+			if (status !== 204 && error) {
+				addToast('FAILED', 'Something went wrong.');
+				throw error;
 			}
-
-			// updated indicator
-			usernameUpdated = true;
-			setTimeout(() => {
-				usernameUpdated = false;
-			}, 3000);
+			// success
+			addToast('SUCCESS', 'Successfully updated.');
 		} catch (e) {
 			if (e instanceof Error) {
 				console.log('updateusername func error', e);
 			}
 		}
+	}
+
+	// toast
+	interface item {
+		id: number;
+		severity: string;
+		message: string;
+	}
+
+	let items: any = [];
+
+	$: if (items.length > 0) {
+		const thisItem = items[items.length - 1];
+		setTimeout(() => {
+			items = items.filter((i: item) => i.id !== thisItem.id);
+		}, 3000);
+	}
+
+	function addToast(severity: string, message: string) {
+		let newItem: item = {
+			id: Date.now(),
+			severity,
+			message
+		};
+		items = [...items, newItem];
 	}
 </script>
 
@@ -91,13 +110,12 @@
 				<div class="item">
 					<h2>Username:</h2>
 					<input
-						class="col-input {usernameUpdated ? 'updated' : ''}"
+						class="col-input"
 						name="username"
 						type="text"
 						placeholder={userName}
 						bind:value={userName}
 						on:blur={updateUsername}
-						disabled
 					/>
 				</div>
 			</div>
@@ -129,3 +147,42 @@
 		<!-- -->
 	</section>
 </main>
+
+<!-- Toast notifications -->
+<div id="toast-notifications">
+	<ul>
+		{#each items as item (item.id)}
+			<li
+				class="toast 
+		{item.severity === 'SUCCESS' ? 'success' : ''}
+		{item.severity === 'FAILED' ? 'failed' : ''}"
+				animate:flip
+				in:fade
+				out:fly={{ x: 100 }}
+			>
+				{#if item.severity === 'SUCCESS'}
+					<img
+						class=""
+						src="/toast/check.svg"
+						alt=""
+						width="18"
+						height="18"
+						loading="lazy"
+						decoding="async"
+					/>
+				{:else if item.severity === 'FAILED'}
+					<img
+						class=""
+						src="/toast/close.svg"
+						alt=""
+						width="18"
+						height="18"
+						loading="lazy"
+						decoding="async"
+					/>
+				{/if}
+				<p>{item.message}</p>
+			</li>
+		{/each}
+	</ul>
+</div>
