@@ -1,9 +1,8 @@
 <script lang="ts">
 	// components
-	import BaseImage from '$lib/util/BaseImage.svelte';
 
 	// stores
-	import { phone, fullAddress, email, socials, pages } from '$lib/config';
+	import { pages } from '$lib/config';
 	import { page } from '$app/stores';
 
 	// styles
@@ -14,7 +13,6 @@
 
 	const toggle = () => {
 		isActive = !isActive;
-		document.body.classList.toggle('is-active');
 	};
 
 	let y: any;
@@ -22,6 +20,7 @@
 	// auth logic
 	export let avatarUrl: any;
 	export let session: any;
+	export let username: any;
 </script>
 
 <svelte:window bind:scrollY={y} />
@@ -44,58 +43,61 @@
 				/>
 			</svg>
 		</a>
-		<div class="inner-nav" class:isActive>
-			<ul class="links">
-				<!-- pages - controlled by config -->
-				{#each pages as { pageName, path }}
-					<li class:active={$page.url.pathname === path} class="link">
-						<a href={path} on:click={toggle}>{pageName}</a>
-					</li>
-				{/each}
-				<li class="link social">
-					<a href="/">
-						<BaseImage src="/social/instagram.svg" alt="instagram" />
-						<p>Instagram</p>
-					</a>
-					<a href="/">
-						<BaseImage src="/social/facebook.svg" alt="facebook" />
-						<p>Facebook</p>
-					</a>
-				</li>
-			</ul>
 
-			<!-- nav cta -->
-			{#if session}
-				<form action="/login?/logout" method="POST">
-					<button id="cta" class="btn" type="submit">Logout</button>
-				</form>
-			{:else}
-				<a id="cta" href="/login" class="btn">Login</a>
-				<a id="cta" href="/register" class="btn">Register</a>
-			{/if}
-			<!-- nav cta -->
+		<div class="nav-profile-wrap">
+			<!-- profile -->
+			<button id="nav-profile" on:click={toggle}>
+				<div class="hamburger hamburger--squeeze" class:isActive>
+					<span class="hamburger-box">
+						<span class="hamburger-inner" />
+					</span>
+				</div>
+				<div class="current-user">
+					{#if avatarUrl}
+						<img src={avatarUrl} alt="profile picture " width="100" height="100" />
+					{:else if !avatarUrl}
+						<img src="/placeholder.jpg" alt="profile picture " width="100" height="100" />
+					{/if}
+				</div>
+			</button>
+
+			<div class="nav-profile-list" class:isActive>
+				{#if session}
+					<div class="nav-profile-details">
+						{#if avatarUrl}
+							<img class="" src={avatarUrl} alt="profile picture " width="100" height="100" />
+							<div class="flex">
+								<p>{username}</p>
+								<a href="/profile" on:click={toggle}>View Account</a>
+							</div>
+						{:else if !avatarUrl}
+							<img
+								class=""
+								src="/placeholder.jpg"
+								alt="profile picture "
+								width="100"
+								height="100"
+							/>
+						{/if}
+					</div>
+					<ul>
+						<li>
+							<form class="nav-form" action="/login?/logout" method="POST">
+								<button type="submit" on:click={toggle}>Logout</button>
+							</form>
+						</li>
+					</ul>
+				{:else}
+					<ul>
+						<li>
+							<a href="/login" on:click={toggle}>Login</a>
+						</li>
+						<li>
+							<a href="/register" on:click={toggle}>Sign Up</a>
+						</li>
+					</ul>
+				{/if}
+			</div>
 		</div>
-
-		<button
-			class="hamburger hamburger--squeeze"
-			class:isActive
-			aria-label="toggle"
-			on:click={toggle}
-		>
-			<span class="hamburger-box">
-				<span class="hamburger-inner" />
-			</span>
-		</button>
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<div class="nav-overlay" class:isActive on:click={toggle} />
-
-		<!-- profile -->
-		<a class="current-user" href="/profile">
-			{#if avatarUrl}
-				<img src={avatarUrl} alt="profile picture " width="100" height="100" />
-			{:else if !avatarUrl}
-				<img src="/placeholder.jpg" alt="profile picture " width="100" height="100" />
-			{/if}
-		</a>
 	</nav>
 </header>

@@ -25,10 +25,11 @@
 
 	export let data: LayoutData;
 	const avatarUrl = data.avatarUrl.data?.avatar_url;
+	const username = data.username.data?.username;
 	const { session } = data;
 </script>
 
-<Navigation {avatarUrl} {session} />
+<Navigation {avatarUrl} {session} {username} />
 <slot />
 <Footer />
 <ToTop />

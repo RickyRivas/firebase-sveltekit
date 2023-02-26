@@ -9,6 +9,10 @@ export const load: LayoutServerLoad = async (event) => {
         avatarUrl: supabaseClient.from('profiles')
 			.select(`avatar_url`)
 			.eq('id', session?.user.id)
+             .single(),
+        username: supabaseClient.from('profiles')
+			.select(`username`)
+			.eq('id', session?.user.id)
              .single()
     }
 }

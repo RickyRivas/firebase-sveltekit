@@ -36,7 +36,7 @@
 
 				// delete current profile pic from cloudinary only if !avatarUrl
 				if (avatarUrl) {
-					await deleteOldImgFromCloudinary();
+					await deleteFromCloudinary();
 				}
 
 				await updateSb(url);
@@ -76,7 +76,7 @@
 		}
 	}
 
-	async function deleteOldImgFromCloudinary() {
+	async function deleteFromCloudinary() {
 		const res = await fetch('/cloud', {
 			method: 'POST',
 			headers: {
@@ -99,7 +99,7 @@
 			.update({ avatar_url: '' })
 			.eq('id', session.user.id);
 
-		await deleteOldImgFromCloudinary();
+		await deleteFromCloudinary();
 
 		// new session
 		const { data, error: e } = await supabaseClient.auth.refreshSession();

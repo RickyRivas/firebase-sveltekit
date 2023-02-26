@@ -15,21 +15,6 @@ export const pages = [
 		metaDescription: ''
 	},
 	{
-		pageName: 'testimonials',
-		path: '/testimonials',
-		metaDescription: 'This is the test page'
-	},
-	{
-		pageName: 'portfolio',
-		path: '/portfolio',
-		metaDescription: ''
-	},
-	{
-		pageName: 'about',
-		path: '/about',
-		metaDescription: 'about our company'
-	},
-	{
 		pageName: 'contact',
 		path: '/contact',
 		metaDescription: ''
