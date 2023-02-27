@@ -9,6 +9,7 @@
 	import { onMount } from 'svelte';
 	import { supabaseClient } from '$lib/supabase/supabase';
 	import { invalidateAll } from '$app/navigation';
+	import type { PageData } from './$types';
 	// logic
 	onMount(() => {
 		const {
@@ -21,6 +22,8 @@
 			subscription.unsubscribe();
 		};
 	});
+	export let data: PageData;
+	console.log(data);
 </script>
 
 <Navigation />
