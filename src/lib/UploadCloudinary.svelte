@@ -68,7 +68,7 @@
 				console.log(e);
 			}
 
-			// window.location.reload();
+			window.location.reload();
 		} catch (error) {
 			if (error instanceof Error) {
 				console.log(error);
