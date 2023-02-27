@@ -1,13 +1,15 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import { supabaseClient } from '$lib/supabase/supabase';
 	let widget: any;
-	export let session: any;
-	export let avatarUrl: any;
+
+	const { session, user } = $page.data;
+	export let avatarUrl: string | null = user.avatar_url;
 
 	// extract public id from avatarUrl
-	const rawPublicId = avatarUrl.substring(avatarUrl.length, avatarUrl.indexOf('user_images'));
-	const publicId = rawPublicId.substring(0, rawPublicId.indexOf('.'));
+	const rawPublicId = avatarUrl?.substring(avatarUrl.length, avatarUrl.indexOf('user_images'));
+	const publicId = rawPublicId?.substring(0, rawPublicId.indexOf('.'));
 
 	onMount(async () => {
 		getCloudinaryData();
@@ -28,10 +30,8 @@
 			multiple: false
 		};
 
-		const processResults = async (error, result) => {
+		const processResults = async (error: any, result: any) => {
 			if (!error && result && result.event === 'success') {
-				console.log(result);
-
 				const { url } = result.info;
 
 				// delete current profile pic from cloudinary only if !avatarUrl
@@ -55,7 +55,7 @@
 			const { error } = await supabaseClient
 				.from('profiles')
 				.update({ avatar_url: imgUrl })
-				.eq('id', session.user.id);
+				.eq('id', session?.user.id);
 
 			if (error) {
 				console.log(error);
@@ -97,7 +97,7 @@
 		const { error } = await supabaseClient
 			.from('profiles')
 			.update({ avatar_url: '' })
-			.eq('id', session.user.id);
+			.eq('id', session?.user.id);
 
 		await deleteFromCloudinary();
 

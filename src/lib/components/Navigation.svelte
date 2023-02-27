@@ -2,7 +2,6 @@
 	// components
 
 	// stores
-	import { pages } from '$lib/config';
 	import { page } from '$app/stores';
 
 	// styles
@@ -18,9 +17,9 @@
 	let y: any;
 
 	// auth logic
-	export let avatarUrl: any;
-	export let session: any;
-	export let username: any;
+	let avatarUrl: string | null = $page.data.user.avatar_url;
+	let session: any = $page.data.session;
+	let username: string | null = $page.data.user.username;
 </script>
 
 <svelte:window bind:scrollY={y} />
@@ -45,7 +44,6 @@
 		</a>
 
 		<div class="nav-profile-wrap">
-			<!-- profile -->
 			<button id="nav-profile" on:click={toggle}>
 				<div class="hamburger hamburger--squeeze" class:isActive>
 					<span class="hamburger-box">
@@ -66,19 +64,13 @@
 					<div class="nav-profile-details">
 						{#if avatarUrl}
 							<img class="" src={avatarUrl} alt="profile picture " width="100" height="100" />
-							<div class="flex">
-								<p>{username}</p>
-								<a href="/profile" on:click={toggle}>View Account</a>
-							</div>
 						{:else if !avatarUrl}
-							<img
-								class=""
-								src="/placeholder.jpg"
-								alt="profile picture "
-								width="100"
-								height="100"
-							/>
+							<img src="/placeholder.jpg" alt="profile picture " width="100" height="100" />
 						{/if}
+						<div class="flex">
+							<p>{username}</p>
+							<a href="/profile" on:click={toggle}>View Account</a>
+						</div>
 					</div>
 					<ul>
 						<li>

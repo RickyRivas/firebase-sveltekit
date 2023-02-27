@@ -8,33 +8,26 @@
 	// stores
 	// styles
 	import '$styles/profile/main.css';
-	import { onMount } from 'svelte';
 	// logic
 	export let data: PageData;
-	const { session } = data;
+	const { session, user } = data;
 
 	// account info
-	let userName: string | null = data.username.data.username;
-	let avatarUrl: string | null = data.avatar_url.data.avatar_url;
+	let username: string | null = user.username;
+	let avatarUrl: string | null = user.avatar_url;
 	let userEmail: string | null = session.user.email;
-
-	// onmount get account details
-	onMount(() => {
-		// console.log(data);
-	});
 
 	async function updateUsername() {
 		const { error, status } = await supabaseClient
 			.from('profiles')
-			.update({ username: `${userName}` })
+			.update({ username: `${username}` })
 			.eq('id', session.user.id);
 
-		// if error
 		if (status !== 204 && error) {
 			addToast('FAILED', 'Something went wrong.');
 			throw error;
 		}
-		// success
+
 		addToast('SUCCESS', 'Successfully updated.');
 	}
 
@@ -81,8 +74,8 @@
 						class="col-input"
 						name="username"
 						type="text"
-						placeholder={userName}
-						bind:value={userName}
+						placeholder={username}
+						bind:value={username}
 						on:blur={updateUsername}
 					/>
 				</div>
@@ -93,7 +86,7 @@
 					<h2>Profile Photo</h2>
 					<div class="img-container {avatarUrl ? '' : 'none'}">
 						{#if session && avatarUrl}
-							<img src={avatarUrl} alt="profile picture for {userName}" width="500" height="500" />
+							<img src={avatarUrl} alt="profile picture for {username}" width="500" height="500" />
 						{:else if !avatarUrl}
 							<img src="/placeholder.jpg" alt="profile picture " width="100" height="100" />
 						{/if}
@@ -106,8 +99,6 @@
 				<button class="profile-logout">Logout</button>
 			</form>
 		</div>
-
-		<!-- -->
 	</section>
 </main>
 

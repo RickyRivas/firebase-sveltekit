@@ -9,7 +9,6 @@
 	import { onMount } from 'svelte';
 	import { supabaseClient } from '$lib/supabase/supabase';
 	import { invalidateAll } from '$app/navigation';
-	import type { LayoutData } from './$types';
 	// logic
 	onMount(() => {
 		const {
@@ -22,14 +21,9 @@
 			subscription.unsubscribe();
 		};
 	});
-
-	export let data: LayoutData;
-	const avatarUrl = data.avatarUrl.data?.avatar_url;
-	const username = data.username.data?.username;
-	const { session } = data;
 </script>
 
-<Navigation {avatarUrl} {session} {username} />
+<Navigation />
 <slot />
 <Footer />
 <ToTop />
