@@ -26,7 +26,7 @@
 			uploadSignature: data.signature,
 			sources: ['local'],
 			folder: 'user_images',
-			secure: false,
+			secure: true,
 			multiple: false
 		};
 
