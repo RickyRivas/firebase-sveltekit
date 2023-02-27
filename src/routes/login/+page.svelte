@@ -7,8 +7,6 @@
 	// styles
 	import '$styles/login/main.css';
 	// logic
-	import type { PageData } from './$types';
-	export let data: PageData;
 </script>
 
 <SubNav {pageTitle} />

@@ -91,7 +91,7 @@
 							<img src="/placeholder.jpg" alt="profile picture " width="100" height="100" />
 						{/if}
 					</div>
-					<UploadCloudinary {session} {avatarUrl} />
+					<UploadCloudinary />
 				</div>
 			</div>
 
