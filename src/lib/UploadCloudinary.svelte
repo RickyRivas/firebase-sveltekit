@@ -32,7 +32,7 @@
 
 		const processResults = async (error: any, result: any) => {
 			if (!error && result && result.event === 'success') {
-				const { url } = result.info;
+				const url = result.info.secure_url;
 
 				// delete current profile pic from cloudinary only if !avatarUrl
 				if (avatarUrl) {
@@ -68,7 +68,7 @@
 				console.log(e);
 			}
 
-			window.location.reload();
+			// window.location.reload();
 		} catch (error) {
 			if (error instanceof Error) {
 				console.log(error);
