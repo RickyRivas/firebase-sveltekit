@@ -23,6 +23,11 @@ header {
     font-size: inherit;
   }
 }
+@media only screen and (min-width: 1300px) {
+  header {
+    position: fixed;
+  }
+}
 header nav {
   width: 100%;
   max-width: 95%;
@@ -137,6 +142,7 @@ header nav .nav-profile-wrap .nav-profile-list ul li a:hover {
 header nav .nav-profile-wrap .nav-profile-list ul li .nav-form {
   display: flex;
   width: 100%;
+  height: auto;
 }
 header nav .nav-profile-wrap .nav-profile-list ul li .nav-form button {
   border: 0;
@@ -144,7 +150,9 @@ header nav .nav-profile-wrap .nav-profile-list ul li .nav-form button {
   background-color: transparent;
   transition: background-color 0.33s ease;
   display: flex;
+  align-items: center;
   width: 100%;
+  line-height: 1.2;
   padding: 0.5em 1em;
 }
 header nav .nav-profile-wrap .nav-profile-list ul li .nav-form button:hover {

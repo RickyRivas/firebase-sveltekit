@@ -20,6 +20,10 @@ header {
         font-size: inherit;
     }
 
+    @media only screen and (min-width: 1300px) {
+        position: fixed;
+    }
+
 
     // entire nav
     nav {
@@ -151,6 +155,8 @@ header {
                         .nav-form {
                             display: flex;
                             width: 100%;
+                            height: auto;
+
 
                             button {
                                 border: 0;
@@ -158,7 +164,9 @@ header {
                                 background-color: transparent;
                                 transition: background-color .33s ease;
                                 display: flex;
+                                align-items: center;
                                 width: 100%;
+                                line-height: 1.2;
                                 padding: .5em 1em;
 
                                 &:hover {
