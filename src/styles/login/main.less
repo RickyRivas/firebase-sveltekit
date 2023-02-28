@@ -28,7 +28,7 @@ main#login {
 
             .graphic {
                 position: relative;
-                background-image: radial-gradient(circle at center center, transparent 0%, rgb(33, 33, 33) 99%), repeating-linear-gradient(0deg, rgba(163, 163, 163, 0.2) 0px, rgba(163, 163, 163, 0.2) 1px, transparent 1px, transparent 6px), repeating-linear-gradient(90deg, rgba(163, 163, 163, 0.2) 0px, rgba(163, 163, 163, 0.2) 1px, transparent 1px, transparent 6px), linear-gradient(90deg, rgb(33, 33, 33), rgb(33, 33, 33));
+                background: url(/bg.jpg) center right / cover no-repeat;
                 width: 100%;
 
                 @media only screen and (min-width: 768px) {
@@ -55,13 +55,10 @@ main#login {
                     width: 50%;
                 }
 
-                @media only screen and (max-width: 767px) {
-                    background-image: repeating-linear-gradient(90deg, hsla(196, 0%, 79%, 0.06) 0px, hsla(196, 0%, 79%, 0.06) 1px, transparent 1px, transparent 96px), repeating-linear-gradient(0deg, hsla(196, 0%, 79%, 0.06) 0px, hsla(196, 0%, 79%, 0.06) 1px, transparent 1px, transparent 96px), repeating-linear-gradient(0deg, hsla(196, 0%, 79%, 0.09) 0px, hsla(196, 0%, 79%, 0.09) 1px, transparent 1px, transparent 12px), repeating-linear-gradient(90deg, hsla(196, 0%, 79%, 0.09) 0px, hsla(196, 0%, 79%, 0.09) 1px, transparent 1px, transparent 12px), linear-gradient(90deg, rgb(255, 255, 255), rgb(255, 255, 255));
-                }
 
                 @media only screen and (min-width: 1300px) {
                     justify-content: flex-start;
-                    padding-left: 7em;
+                    padding-left: 5em;
                 }
 
                 .wrapper {
@@ -69,6 +66,8 @@ main#login {
                     justify-content: center;
                     align-items: center;
                     flex-direction: column;
+                    width: 96%;
+                    max-width: (500/20em);
 
                     h1 {
                         font-size: (45/20em);
@@ -84,11 +83,63 @@ main#login {
                         }
                     }
 
-                    p {
+                    p.divider {
                         font-size: (18/20em);
+                        position: relative;
+                        display: block;
+                        width: 100%;
+                        text-align: center;
+                        z-index: 1;
+                        margin-bottom: 1em;
+
+                        span {
+                            background-color: white;
+                            z-index: 2;
+                            position: relative;
+                            padding: 0 .5em;
+                            font-size: (18/20em);
+                        }
+
+                        &::before {
+                            content: '';
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            width: 100%;
+                            height: 1px;
+                            background-color: #202020;
+                            transform: translate(-50%, -50%);
+                        }
 
                         a {
                             color: var(--primary-color);
+                        }
+                    }
+
+                    .login-btn {
+                        border: 0;
+                        width: 100%;
+                        padding: .75em;
+                        margin-bottom: 1em;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        font-size: (18/20em);
+                        font-weight: 500;
+                        font-family: inherit;
+                        background-color: transparent;
+                        border: 2px solid rgba(0, 0, 0, .1);
+                        border-radius: .5em;
+
+                        img {
+                            width: (25/18em);
+                            height: (25/18em);
+                            position: relative;
+                            margin-right: 1em;
+                        }
+
+                        &.last {
+                            margin-bottom: 0;
                         }
                     }
                 }
@@ -97,7 +148,8 @@ main#login {
             form {
                 display: flex;
                 flex-direction: column;
-                width: (400/20em);
+                width: 100%;
+                max-width: (500/20em);
                 margin-bottom: 1em;
 
                 label {
@@ -111,9 +163,11 @@ main#login {
                     padding: 1em;
                     border-radius: .5em;
                     margin-bottom: 1em;
-                    border: 1px solid rgba(0, 0, 0, .1);
+                    border: 2px solid rgba(0, 0, 0, .1);
                     width: 100%;
                     background-color: white !important;
+                    font-weight: 500;
+                    font-size: (15/20em);
 
                     @media only screen and (max-width: 767px) {
                         font-size: 16px;
