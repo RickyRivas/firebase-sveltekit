@@ -114,6 +114,11 @@ main#login section#login-landing .container form input {
   width: 100%;
   background-color: white !important;
 }
+@media only screen and (max-width: 767px) {
+  main#login section#login-landing .container form input {
+    font-size: 16px;
+  }
+}
 main#login section#login-landing .container form button {
   width: 100%;
   margin: 0;
