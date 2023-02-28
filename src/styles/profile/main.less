@@ -54,6 +54,19 @@ main#profile {
                     display: flex;
                     flex-direction: column;
                     align-items: flex-start;
+                    position: relative;
+
+                    .edit-btn {
+                        position: absolute;
+                        font-size: inherit;
+                        background-color: transparent;
+                        border: 0;
+                        font-family: inherit;
+                        right: 0;
+                        top: 1em;
+                        font-size: (15/20em);
+                        color: #c1121f;
+                    }
 
                     &:nth-child(1) {
                         padding-top: 0;
@@ -81,7 +94,6 @@ main#profile {
                         position: relative;
                         overflow: hidden;
                         box-shadow: var(--box-shadow);
-                        margin-bottom: .5em;
 
                         img {
                             position: absolute;
@@ -95,14 +107,19 @@ main#profile {
                     }
 
                     .col-input {
-                        padding: .5em;
-                        width: 15em;
-                        box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 16%) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px;
-                        border-radius: .2em;
-                        border: 0;
+                        padding: 1em;
+                        width: 20em;
+                        border: 2px solid rgba(0, 0, 0, .1);
+                        border-radius: .5em;
+                        background-color: transparent;
+                        font-size: (15/20em);
 
                         &.updated {
                             border: 1px solid var(--accent-color);
+                        }
+
+                        &[disabled] {
+                            background-color: #f8f9fa;
                         }
                     }
                 }

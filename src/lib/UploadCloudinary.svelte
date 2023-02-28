@@ -119,28 +119,37 @@
 </script>
 
 {#if !avatarUrl}
-	<button on:click|preventDefault={handleClick}>Upload</button>
+	<div class="btns">
+		<button on:click|preventDefault={handleClick}>Upload</button>
+	</div>
 {:else}
 	<div class="btns">
 		<button on:click|preventDefault={handleClick}>Upload</button>
-		<button on:click|preventDefault={removeAvatar}>Clear Avatar</button>
+		<button on:click|preventDefault={removeAvatar}>Remove</button>
 	</div>
 {/if}
 
 <style>
 	.btns {
 		display: flex;
+		flex-direction: column;
+		position: absolute;
+		justify-content: flex-end;
+		top: 1em;
+		right: 0;
+		width: auto;
 	}
 	button {
 		border: 0;
-		padding: 0.5em 2em;
-		font-size: 0.6em;
-		background-color: #f4f4f4;
+		font-size: 0.75em;
+		text-align: right;
+		background-color: transparent;
 		display: flex;
-		justify-content: center;
+		justify-content: flex-end;
 		align-items: center;
+		color: #c1121f;
 	}
 	button:nth-child(1) {
-		margin-right: 0.5em;
+		margin-bottom: 0.5em;
 	}
 </style>

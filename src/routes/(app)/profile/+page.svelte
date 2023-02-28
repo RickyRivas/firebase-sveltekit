@@ -67,6 +67,7 @@
 						bind:value={userEmail}
 						disabled
 					/>
+					<button id="edit-email" class="edit-btn">Edit</button>
 				</div>
 				<div class="item">
 					<h2>Username:</h2>
@@ -77,7 +78,14 @@
 						placeholder={username}
 						bind:value={username}
 						on:blur={updateUsername}
+						disabled
 					/>
+					<button id="edit-username" class="edit-btn">Edit</button>
+				</div>
+				<div class="item">
+					<h2>Password:</h2>
+					<input class="col-input" name="username" type="password" value={username} disabled />
+					<button id="edit-username" class="edit-btn">Edit</button>
 				</div>
 			</div>
 			<h2>Public Information</h2>
