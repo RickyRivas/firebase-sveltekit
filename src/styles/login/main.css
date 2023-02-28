@@ -128,6 +128,7 @@ main#login section#login-landing .container .content .wrapper .login-btn {
   background-color: transparent;
   border: 2px solid rgba(0, 0, 0, 0.1);
   border-radius: 0.5em;
+  color: #202020;
 }
 main#login section#login-landing .container .content .wrapper .login-btn img {
   width: 1.38888889em;
