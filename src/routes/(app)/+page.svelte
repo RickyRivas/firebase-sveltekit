@@ -1,7 +1,7 @@
 <script lang="ts">
 	// components
 	import LazyImage from '$lib/util/LazyImage.svelte';
-	import BaseImage from './../lib/util/BaseImage.svelte';
+	import BaseImage from '../../lib/util/BaseImage.svelte';
 	// stores
 	import { URL, companyName, industry, cityAndState, pages } from '$lib/config';
 	import { reviews, services } from '$lib/content';

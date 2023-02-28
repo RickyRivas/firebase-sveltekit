@@ -22,7 +22,7 @@ export const actions: Actions = {
             })
         }
 
-        throw redirect(303, '/')
+        throw redirect(303, '/') 
     },
     logout: async ({ locals }) => {
         const { error: err } = await locals.sb.auth.signOut()
@@ -33,6 +33,6 @@ export const actions: Actions = {
             })
         }
 
-        throw redirect(303, '/')
+        throw redirect(303, '/login')
     }
 };
