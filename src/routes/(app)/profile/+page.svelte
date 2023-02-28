@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fade } from 'svelte/transition';
 	import type { item } from '$lib/supabase/supabase';
 	import UploadCloudinary from '$lib/UploadCloudinary.svelte';
 	import { supabaseClient } from '$lib/supabase/supabase';
@@ -16,20 +17,6 @@
 	let username: string | null = user.username;
 	let avatarUrl: string | null = user.avatar_url;
 	let userEmail: string | null = session.user.email;
-
-	async function updateUsername() {
-		const { error, status } = await supabaseClient
-			.from('profiles')
-			.update({ username: `${username}` })
-			.eq('id', session.user.id);
-
-		if (status !== 204 && error) {
-			addToast('FAILED', 'Something went wrong.');
-			throw error;
-		}
-
-		addToast('SUCCESS', 'Successfully updated.');
-	}
 
 	// toast notifications
 	let toastItems: any = [];
@@ -49,6 +36,41 @@
 		};
 		toastItems = [...toastItems, newItem];
 	}
+
+	// update funcs
+	let showUpdateModal = false;
+	let modalHeading: string | undefined = undefined;
+	let newUsername: string | undefined = undefined;
+	let newEmail: string | undefined = undefined;
+	let newPassword: string | undefined = undefined;
+
+	async function updateUsername() {
+		const { error, status } = await supabaseClient
+			.from('profiles')
+			.update({ username: `${newUsername}` })
+			.eq('id', session.user.id);
+
+		if (status !== 204 && error) {
+			addToast('FAILED', 'Something went wrong.');
+			throw error;
+		}
+
+		addToast('SUCCESS', 'Successfully updated.');
+	}
+
+	// TODO: update funcs
+	async function updateEmail() {
+		// const { user, error } = await supabaseClient.auth.updateUser({ email: newEmail });
+	}
+
+	async function updatePassword() {
+		console.log(newPassword);
+	}
+
+	function initUpdateModal(userWantsToUpdate: string) {
+		showUpdateModal = true;
+		modalHeading = userWantsToUpdate;
+	}
 </script>
 
 <main id="profile">
@@ -67,7 +89,13 @@
 						bind:value={userEmail}
 						disabled
 					/>
-					<button id="edit-email" class="edit-btn">Edit</button>
+					<button
+						id="edit-email"
+						class="edit-btn"
+						on:click={() => {
+							initUpdateModal('email');
+						}}>Edit</button
+					>
 				</div>
 				<div class="item">
 					<h2>Username:</h2>
@@ -77,15 +105,26 @@
 						type="text"
 						placeholder={username}
 						bind:value={username}
-						on:blur={updateUsername}
 						disabled
 					/>
-					<button id="edit-username" class="edit-btn">Edit</button>
+					<button
+						id="edit-username"
+						class="edit-btn"
+						on:click={() => {
+							initUpdateModal('username');
+						}}>Edit</button
+					>
 				</div>
 				<div class="item">
 					<h2>Password:</h2>
-					<input class="col-input" name="username" type="password" value={username} disabled />
-					<button id="edit-username" class="edit-btn">Edit</button>
+					<input class="col-input" name="username" type="text" value="********" disabled />
+					<button
+						id="edit-username"
+						class="edit-btn"
+						on:click={() => {
+							initUpdateModal('password');
+						}}>Edit</button
+					>
 				</div>
 			</div>
 			<h2>Public Information</h2>
@@ -112,3 +151,56 @@
 
 <!-- Toast notifications -->
 <ToastNotifications items={toastItems} />
+
+{#if showUpdateModal}
+	<div id="modal" transition:fade>
+		<div class="container">
+			<button
+				id="close"
+				on:click={() => {
+					showUpdateModal = false;
+				}}
+			>
+				<img
+					class=""
+					src="/close.svg"
+					alt=""
+					width="25"
+					height="25"
+					loading="lazy"
+					decoding="async"
+				/></button
+			>
+			<h2>Enter new {modalHeading}:</h2>
+			<!-- funcs -->
+			{#if modalHeading === 'email'}
+				<input class="col-input" name="username" bind:value={newEmail} type="email" />
+				<button
+					id="update-btn"
+					on:click={() => {
+						showUpdateModal = false;
+						updateEmail();
+					}}>Update</button
+				>
+			{:else if modalHeading === 'username'}
+				<input class="col-input" name="username" bind:value={newUsername} type="text" />
+				<button
+					id="update-btn"
+					on:click={() => {
+						showUpdateModal = false;
+						updateUsername();
+					}}>Update</button
+				>
+			{:else if modalHeading === 'password'}
+				<input class="col-input" name="username" bind:value={newPassword} type="text" />
+				<button
+					id="update-btn"
+					on:click={() => {
+						showUpdateModal = false;
+						updatePassword();
+					}}>Update</button
+				>
+			{/if}
+		</div>
+	</div>
+{/if}

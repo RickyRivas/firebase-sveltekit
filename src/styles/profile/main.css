@@ -2,7 +2,7 @@ main#profile section#profile-landing {
   width: 100%;
   max-width: 60em;
   margin: auto;
-  padding: 8em 1em 3em;
+  padding: 5em 1em 3em;
 }
 @media only screen and (max-width: 767px) {
   main#profile section#profile-landing {
@@ -12,7 +12,7 @@ main#profile section#profile-landing {
 @media only screen and (min-width: 768px) {
   main#profile section#profile-landing {
     font-size: 1.7vw;
-    padding: 8em 0 5em;
+    padding: 5em 0 5em;
   }
 }
 @media only screen and (min-width: 1024px) {
@@ -164,4 +164,70 @@ main#profile section#profile-landing .container form#profile-logout button {
 }
 #toast-notifications ul .toast.warning {
   background-color: #fff9e9;
+}
+#modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#modal .container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  background-color: white;
+  padding: 2em;
+  border-radius: 1em;
+  position: relative;
+  overflow: hidden;
+  width: 20em;
+  box-shadow: var(--box-shadow);
+}
+#modal .container #close {
+  position: absolute;
+  right: 0.5em;
+  top: 0.5em;
+  border: 0;
+  font-size: inherit;
+  background-color: transparent;
+  padding: 0.2em;
+  width: 1.5em;
+  height: 1.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.33s ease;
+}
+#modal .container #close img {
+  width: 1em;
+  height: 1em;
+}
+#modal .container #close:hover,
+#modal .container #close:focus {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+#modal .container h2 {
+  font-size: 1.25em;
+  text-align: left;
+  margin: 0 0 1em 0;
+}
+#modal .container input {
+  padding: 1em;
+  width: 100%;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.5em;
+  color: #202020;
+  margin-bottom: 0.5em;
+}
+#modal .container #update-btn {
+  padding: 0.5em 1em;
+  border: 0;
+  font-size: 0.75em;
 }
